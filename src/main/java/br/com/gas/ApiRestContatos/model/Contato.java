@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 @Table(name = "tb_contato")
 public class Contato {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //autoincrement
+    private Long idContato;
+
     @Enumerated(EnumType.ORDINAL)
     private TipoContato tipoContato;
 
@@ -20,8 +24,8 @@ public class Contato {
         //Comentários para eu não me perder
         //Enum criado dentro da classe Contato pois é um caso específico
 
-        TELEFONE(0),
-        CELULAR(1);
+        telefone(0),
+        celular(1);
 
         private final int valor;
 
@@ -34,15 +38,6 @@ public class Contato {
         }
     }
 
-
-//
-//    @OneToOne
-//    @JoinColumn(name = "produto_id", referencedColumnName = "id")
-//    private Pessoa pessoa;
-//    /*
-//     * SELECT * FROM Produto p inner join Contatos e ON p.id = e.produto_id
-//     */
-
     public Contato() {}
 
 
@@ -50,10 +45,7 @@ public class Contato {
     public String toString() {
         // TODO Auto-generated method stub
         return "Contatos: [ " +
-                "id: " + this.id + "\n" +
-                "quantidade: " + this.quantidade + "\n" +
-                "produto: " + this.pessoa.getId() + "]";
+                "ID: " + this.idContato + "\n" +
+                "Tipo do Contato: " + this.tipoContato + "\n" + "]";
     }
-
-
 }

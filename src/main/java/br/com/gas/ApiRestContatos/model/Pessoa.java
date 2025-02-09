@@ -10,7 +10,7 @@ public class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //autoincrement
-    private Long id;
+    private Long idPessoa;
 
     @Column(nullable = false) //not null
     private String nome;
@@ -36,8 +36,8 @@ public class Pessoa {
     // - mappedBy define o lado inverso do relacionamento
     private List<Contato> contatos;
 
-    public Pessoa(Long id, String nome, String endereco, String cep, String cidade, String uf) {
-        this.id = id;
+    public Pessoa(Long idPessoa, String nome, String endereco, String cep, String cidade, String uf) {
+        this.idPessoa = idPessoa;
         this.nome = nome;
         this.endereco = endereco;
         this.cep = cep;
@@ -45,12 +45,12 @@ public class Pessoa {
         this.uf = uf;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdPessoa() {
+        return idPessoa;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdPessoa(Long idPessoa) {
+        this.idPessoa = idPessoa;
     }
 
     public String getNome() {
@@ -104,7 +104,7 @@ public class Pessoa {
     @Override
     public String toString() {
         String retorno = "[" +
-                "ID: "             + this.id         + ", " +
+                "ID: "             + this.idPessoa + ", " +
                 "Nome: " + this.nome + ", " +
                 "Endereço: " + this.endereco + ", " +
                 "CEP: " + this.cep + ", " +
