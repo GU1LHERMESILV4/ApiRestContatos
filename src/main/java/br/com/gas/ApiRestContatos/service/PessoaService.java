@@ -16,7 +16,7 @@ public class PessoaService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
-    // CRUD - Create: Criar Pessoa
+    // CRUD - Create: Criar Pessoa (Não é comentário do ChatGPT)
     public Pessoa save(Pessoa pessoa) {
         if (pessoa.getNome() == null || pessoa.getNome().isEmpty()) {
             System.out.println("O campo nome está vazio.");
@@ -25,12 +25,12 @@ public class PessoaService {
         return pessoaRepository.save(pessoa);
     }
 
-    // CRUD - Read: Obter Pessoa por ID
+    // CRUD - Read: Obter Pessoa por ID (Não é comentário do ChatGPT)
     public Optional<Pessoa> findById(Long idPessoa) {
         return pessoaRepository.findById(idPessoa);
     }
 
-    // CRUD - Read: Obter Pessoa para Mala Direta
+    // CRUD - Read: Obter Pessoa para Mala Direta (Não é comentário do ChatGPT)
     public MalaDiretaDTO getPessoaForMailing(Long idPessoa) {
         Optional<Pessoa> pessoa = pessoaRepository.findById(idPessoa);
         if (pessoa.isPresent()) {
@@ -44,12 +44,12 @@ public class PessoaService {
         return null;
     }
 
-    // CRUD - Read: Listar todas as Pessoas
+    // CRUD - Read: Listar todas as Pessoas (Não é comentário do ChatGPT)
     public List<Pessoa> findAll() {
         return pessoaRepository.findAll();
     }
 
-    // CRUD - Update: Atualizar Pessoa
+    // CRUD - Update: Atualizar Pessoa (Não é comentário do ChatGPT)
     public Pessoa update(Long id, Pessoa pessoa) {
         Optional<Pessoa> pessoaExistente = pessoaRepository.findById(id);
         if (pessoaExistente.isPresent()) {
@@ -64,7 +64,7 @@ public class PessoaService {
         return null;
     }
 
-    // CRUD - Delete: Deletar Pessoa por ID
+    // CRUD - Delete: Deletar Pessoa por ID (Não é comentário do ChatGPT)
     public void delete(Long id) {
         pessoaRepository.deleteById(id);
     }
