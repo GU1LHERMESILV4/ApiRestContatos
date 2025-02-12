@@ -4,6 +4,7 @@ import br.com.gas.ApiRestContatos.model.Pessoa;
 import br.com.gas.ApiRestContatos.model.Contato;
 import br.com.gas.ApiRestContatos.repository.PessoaRepository;
 import br.com.gas.ApiRestContatos.repository.ContatoRepository;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class ApiRestContatosController {
     @Autowired
     private ContatoRepository contatoRepository;
 
-    // Endpoint para listar todas as pessoas
+    @Operation(summary = "Lista todas as pessoas", description = "Este endpoint retorna uma lista de todas as pessoas cadastradas no banco de dados. Se não houver nenhuma pessoa, retorna uma lista vazia.")
     @GetMapping("/pessoas/listar")
     public List<Pessoa> listarPessoas() {
         List<Pessoa> listaPessoas = new ArrayList<Pessoa>();
@@ -53,6 +54,7 @@ public class ApiRestContatosController {
     }
 
     // LISTAR CONTATOS DE UMA PESSOA
+    @Operation(summary = "Lista todos os contatos", description = "Este endpoint retorna todos os contatos cadastrados no sistema. É possível filtrar os contatos por tipo de pessoa, como telefone ou celular.")
     @GetMapping("/contatos/listar")
     public List<Contato> listarContatos() {
         List<Contato> listaContatos = new ArrayList<Contato>();
@@ -78,7 +80,7 @@ public class ApiRestContatosController {
         return contatoRepository.findAll();
     }
 
-    // Verifica se a API funciona
+    @Operation(summary = "Verifica o status da API", description = "Este endpoint retorna uma mensagem simples para verificar se a API está funcionando corretamente.")
     @GetMapping
     public String getApi() {
         return "API Java funcionando! 😁";
