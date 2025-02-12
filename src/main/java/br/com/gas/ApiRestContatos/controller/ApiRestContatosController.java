@@ -23,9 +23,9 @@ public class ApiRestContatosController {
     private ContatoRepository contatoRepository;
 
     // Endpoint para listar todas as pessoas
-    @GetMapping("pessoas")
+    @GetMapping("/pessoas/listar")
     public List<Pessoa> listarPessoas() {
-        List<Pessoa> listaPessoas = new ArrayList<>();
+        List<Pessoa> listaPessoas = new ArrayList<Pessoa>();
 
         // DADOS TESTE PESSOA
         Pessoa pessoa1 = new Pessoa();
@@ -53,9 +53,9 @@ public class ApiRestContatosController {
     }
 
     // LISTAR CONTATOS DE UMA PESSOA
-    @GetMapping("contatos")
+    @GetMapping("/contatos/listar")
     public List<Contato> listarContatos() {
-        List<Contato> listaContatos = new ArrayList<>();
+        List<Contato> listaContatos = new ArrayList<Contato>();
 
         // DADOS TESTE CONTATO
         Contato contato1 = new Contato();
