@@ -23,6 +23,10 @@ public class Pessoa {
     private String cidade;
     private String uf;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contato> contatos;
 }

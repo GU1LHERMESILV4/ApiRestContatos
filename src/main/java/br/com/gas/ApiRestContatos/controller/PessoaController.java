@@ -1,14 +1,9 @@
 package br.com.gas.ApiRestContatos.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import br.com.gas.ApiRestContatos.dto.MalaDiretaDTO;
 import br.com.gas.ApiRestContatos.model.Pessoa;
 import br.com.gas.ApiRestContatos.service.PessoaService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,61 +12,43 @@ import java.util.Optional;
 @RequestMapping("/api/pessoas")
 public class PessoaController {
 
-    @Autowired
-    private PessoaService pessoaService;
+    private final PessoaService pessoaService;
 
+    public PessoaController(PessoaService pessoaService) {
+        this.pessoaService = pessoaService;
+    }
 
-    @Operation(summary = "Cria uma nova Pessoa")
     @PostMapping
-    public ResponseEntity<Pessoa> createPessoa(@RequestBody Pessoa pessoa) {
-        Pessoa savedPessoa = pessoaService.save(pessoa);
-        if (savedPessoa != null) {
-            return new ResponseEntity<>(savedPessoa, HttpStatus.CREATED);
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Pessoa> criarPessoa(@RequestBody Pessoa pessoa) {
+        return ResponseEntity.ok(pessoaService.salvar(pessoa));
     }
 
-    @Operation(summary = "Retorna os dados de uma Pessoa por ID")
-    @GetMapping("/{id}")
-    public ResponseEntity<Pessoa> getPessoaById(@PathVariable Long id) {
-        Optional<Pessoa> pessoa = pessoaService.findById(id);
-        if (pessoa.isPresent()) {
-            return new ResponseEntity<>(pessoa.get(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @Operation(summary = "Retorna os dados de uma Pessoa por ID para mala direta")
-    @GetMapping("/maladireta/{id}")
-    public ResponseEntity<MalaDiretaDTO> getPessoaForMailing(@PathVariable Long id) {
-        MalaDiretaDTO malaDireta = pessoaService.getPessoaForMailing(id);
-        if (malaDireta != null) {
-            return new ResponseEntity<>(malaDireta, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @Operation(summary = "Lista todas as Pessoas")
     @GetMapping
-    public ResponseEntity<List<Pessoa>> getAllPessoas() {
-        List<Pessoa> pessoas = pessoaService.findAll();
-        return new ResponseEntity<>(pessoas, HttpStatus.OK);
+    public ResponseEntity<List<Pessoa>> listarPessoas() {
+        return ResponseEntity.ok(pessoaService.listarTodas());
     }
 
-    @Operation(summary = "Atualiza uma Pessoa existente")
+    @GetMapping("/{id}")
+    public ResponseEntity<Pessoa> buscarPessoaPorId(@PathVariable Long id) {
+        Optional<Pessoa> pessoa = pessoaService.buscarPorId(id);
+        return pessoa.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Pessoa> updatePessoa(@PathVariable Long id, @RequestBody Pessoa pessoa) {
-        Pessoa updatedPessoa = pessoaService.update(id, pessoa);
-        if (updatedPessoa != null) {
-            return new ResponseEntity<>(updatedPessoa, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Pessoa> atualizarPessoa(@PathVariable Long id, @RequestBody Pessoa pessoaAtualizada) {
+        return pessoaService.buscarPorId(id)
+                .map(pessoa -> {
+                    pessoaAtualizada.setId(id);
+                    return ResponseEntity.ok(pessoaService.salvar(pessoaAtualizada));
+                }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Remove uma Pessoa por ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePessoa(@PathVariable Long id) {
-        pessoaService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Void> deletarPessoa(@PathVariable Long id) {
+        if (pessoaService.buscarPorId(id).isPresent()) {
+            pessoaService.deletar(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
