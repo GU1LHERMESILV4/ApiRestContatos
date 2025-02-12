@@ -1,17 +1,20 @@
 package br.com.gas.ApiRestContatos.model;
 
 import jakarta.persistence.*;
+import lombok.*; //Usei Lombok Edu :(
 
 @Entity
-@Table(name = "tb_contato")
+@Table(name = "contatos")
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class Contato {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //autoincrement
-    private Long idContato;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Enumerated(EnumType.ORDINAL)
-    private TipoContato tipoContato;
+    @Column(nullable = false)
+    private Integer tipoContato; // 0 - Telefone, 1 - Celular
 
     @Column(nullable = false)
     private String contato;
@@ -19,33 +22,4 @@ public class Contato {
     @ManyToOne
     @JoinColumn(name = "pessoa_id", nullable = false)
     private Pessoa pessoa;
-
-    public enum TipoContato {
-        //Comentários para eu não me perder
-        //Enum criado dentro da classe Contato pois é um caso específico
-
-        telefone(0),
-        celular(1);
-
-        private final int valor;
-
-        TipoContato(int valor) {
-            this.valor = valor;
-        }
-
-        public int getValor() {
-            return valor;
-        }
-    }
-
-    public Contato() {}
-
-
-    @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return "Contatos: [ " +
-                "ID: " + this.idContato + "\n" +
-                "Tipo do Contato: " + this.tipoContato + "\n" + "]";
-    }
 }
