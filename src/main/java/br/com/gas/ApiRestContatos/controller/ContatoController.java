@@ -18,19 +18,19 @@ public class ContatoController {
         this.contatoService = contatoService;
     }
 
-    @Operation(summary = "Cria um novo contato", description = "Este endpoint cria um novo contato e o salva no banco de dados.")
+    @Operation(summary = "(Adiciona um novo Contato a uma Pessoa", description = "Este endpoint cria um novo contato e adiciona a uma Pessoa e o salva no banco de dados.")
     @PostMapping
     public ResponseEntity<Contato> criarContato(@RequestBody Contato contato) {
         return ResponseEntity.ok(contatoService.salvar(contato));
     }
 
-    @Operation(summary = "Lista contatos por pessoa", description = "Este endpoint retorna uma lista de contatos vinculados a uma pessoa com o ID fornecido.")
+    @Operation(summary = "Lista todos os Contatos de uma Pessoa", description = "Este endpoint retorna uma lista de contatos vinculados a uma pessoa com o ID fornecido.")
     @GetMapping("/pessoa/{pessoaId}")
     public ResponseEntity<List<Contato>> listarContatosPorPessoa(@PathVariable Long pessoaId) {
         return ResponseEntity.ok(contatoService.listarPorPessoa(pessoaId));
     }
 
-    @Operation(summary = "Deleta um contato", description = "Este endpoint exclui o contato com o ID fornecido do banco de dados.")
+    @Operation(summary = "Remove um Contato por ID", description = "Este endpoint exclui o contato com o ID fornecido do banco de dados.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarContato(@PathVariable Long id) {
         contatoService.deletar(id);
