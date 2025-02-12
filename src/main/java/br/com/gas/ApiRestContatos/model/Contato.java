@@ -1,12 +1,9 @@
 package br.com.gas.ApiRestContatos.model;
 
 import jakarta.persistence.*;
-import lombok.*; //Usei Lombok Edu :(
 
 @Entity
-@Table(name = "contatos")
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Table(name = "tb_contatos")
 public class Contato {
 
     @Id
@@ -22,4 +19,45 @@ public class Contato {
     @ManyToOne
     @JoinColumn(name = "pessoa_id", nullable = false)
     private Pessoa pessoa;
+
+    public Contato() {
+    }
+
+    public Contato(Integer tipoContato, String contato, Pessoa pessoa) {
+        this.tipoContato = tipoContato;
+        this.contato = contato;
+        this.pessoa = pessoa;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getTipoContato() {
+        return tipoContato;
+    }
+
+    public void setTipoContato(Integer tipoContato) {
+        this.tipoContato = tipoContato;
+    }
+
+    public String getContato() {
+        return contato;
+    }
+
+    public void setContato(String contato) {
+        this.contato = contato;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
 }
