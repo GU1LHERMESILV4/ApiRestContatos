@@ -24,6 +24,18 @@ public class ApiRestContatosController {
     @Autowired
     private ContatoRepository contatoRepository;
 
+    @Operation(summary = "Lista todas as pessoas", description = "Este endpoint retorna uma lista de todas as pessoas cadastradas no banco de dados.")
+    @GetMapping("/pessoas/listar")
+    public List<Pessoa> listarPessoas() {
+        return pessoaRepository.findAll();
+    }
+
+    @Operation(summary = "Lista todos os contatos", description = "Este endpoint retorna todos os contatos cadastrados no sistema.")
+    @GetMapping("/contatos/listar")
+    public List<Contato> listarContatos() {
+        return contatoRepository.findAll();
+    }
+
     @Operation(summary = "Adiciona novas pessoas", description = "Este endpoint adiciona pessoas ao banco de dados.")
     @PostMapping("/pessoas/adicionar")
     public List<Pessoa> adicionarPessoas() {
@@ -46,19 +58,20 @@ public class ApiRestContatosController {
         listaPessoas.add(pessoa1);
         listaPessoas.add(pessoa2);
 
+        // Salva as pessoas no banco de dados e retorna
         return pessoaRepository.saveAll(listaPessoas);
     }
 
-
-    // LISTAR CONTATOS DE UMA PESSOA
     @Operation(summary = "Adiciona novos contatos", description = "Este endpoint adiciona contatos ao banco de dados.")
     @PostMapping("/contatos/adicionar")
     public List<Contato> adicionarContatos() {
         List<Contato> listaContatos = new ArrayList<>();
 
+        // Verifica se a pessoa com o ID 1 existe antes de adicionar os contatos
         Pessoa pessoa1 = pessoaRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("Pessoa com ID 1 não encontrada"));
 
+        // Adicionando os contatos para essa pessoa
         Contato contato1 = new Contato();
         contato1.setTipoContato(0); // Telefone
         contato1.setContato("1111-1111");
@@ -67,24 +80,13 @@ public class ApiRestContatosController {
         Contato contato2 = new Contato();
         contato2.setTipoContato(1); // Celular
         contato2.setContato("99999-9999");
-        contato2.setPessoa(pessoa1); // Associando ao mesmo João Silva
+        contato2.setPessoa(pessoa1);
 
         listaContatos.add(contato1);
         listaContatos.add(contato2);
 
+        // Salva os contatos no banco de dados e retorna
         return contatoRepository.saveAll(listaContatos);
-    }
-
-    @Operation(summary = "Lista todas as pessoas", description = "Este endpoint retorna uma lista de todas as pessoas cadastradas no banco de dados.")
-    @GetMapping("/pessoas/listar")
-    public List<Pessoa> listarPessoas() {
-        return pessoaRepository.findAll();
-    }
-
-    @Operation(summary = "Lista todos os contatos", description = "Este endpoint retorna todos os contatos cadastrados no sistema.")
-    @GetMapping("/contatos/listar")
-    public List<Contato> listarContatos() {
-        return contatoRepository.findAll();
     }
 
     @Operation(summary = "Verifica o status da API", description = "Este endpoint retorna uma mensagem simples para verificar se a API está funcionando corretamente.")

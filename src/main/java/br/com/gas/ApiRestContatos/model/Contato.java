@@ -20,8 +20,7 @@ public class Contato {
     @JoinColumn(name = "pessoa_id", nullable = false)
     private Pessoa pessoa;
 
-    public Contato() {
-    }
+    public Contato() {}
 
     public Contato(Integer tipoContato, String contato, Pessoa pessoa) {
         this.tipoContato = tipoContato;

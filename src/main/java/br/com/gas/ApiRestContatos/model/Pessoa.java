@@ -23,6 +23,9 @@ public class Pessoa {
     private String cidade;
     private String uf;
 
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Contato> contatos;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -78,7 +81,4 @@ public class Pessoa {
     public void setContatos(List<Contato> contatos) {
         this.contatos = contatos;
     }
-
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Contato> contatos;
 }
