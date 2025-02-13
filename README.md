@@ -80,7 +80,7 @@ A API implementa as seguintes funcionalidades:
    cd ApiRestContatos
    ```
 
-   Importe o projeto em sua IDE preferida (como IntelliJ ou Eclipse).
+   Importe o projeto em sua IDE preferida como IntelliJ(Recomendada) ou Eclipse.
 
 ## Configuração do Banco de Dados
 
