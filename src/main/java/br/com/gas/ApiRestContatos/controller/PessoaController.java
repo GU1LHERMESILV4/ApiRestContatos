@@ -59,7 +59,8 @@ public class PessoaController {
         return ResponseEntity.notFound().build();
     }
 
-    @Operation(summary = "Atualiza uma pessoa existente", description = "Este endpoint atualiza as informações de uma pessoa já cadastrada.")
+    @Operation(summary = "Atualiza uma pessoa existente",
+            description = "Este endpoint atualiza as informações de uma pessoa já cadastrada.")
     @PutMapping("/{id}")
     public ResponseEntity<Pessoa> atualizarPessoa(@PathVariable Long id, @RequestBody Pessoa pessoaAtualizada) {
         return pessoaService.buscarPorId(id)
@@ -69,7 +70,8 @@ public class PessoaController {
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Remove uma Pessoa por ID", description = "Este endpoint exclui uma pessoa com o ID fornecido do banco de dados.")
+    @Operation(summary = "Remove uma Pessoa por ID",
+            description = "Este endpoint exclui uma pessoa com o ID fornecido do banco de dados.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarPessoa(@PathVariable Long id) {
         if (pessoaService.buscarPorId(id).isPresent()) {
