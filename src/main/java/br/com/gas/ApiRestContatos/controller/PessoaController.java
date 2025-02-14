@@ -27,7 +27,7 @@ public class PessoaController {
             Pessoa pessoaCriada = pessoaService.salvar(pessoa);
             return ResponseEntity.ok(pessoaCriada);
         } catch (Exception e) {
-            return ResponseEntity.status(500).build(); // Retorna erro 500 em caso de falha inesperada
+            return ResponseEntity.status(500).build(); // 500 Internal Server Error
         }
     }
 
@@ -38,7 +38,7 @@ public class PessoaController {
             List<Pessoa> pessoas = pessoaService.listarTodas();
             return ResponseEntity.ok(pessoas);
         } catch (Exception e) {
-            return ResponseEntity.status(500).build(); // Retorna erro 500 em caso de falha inesperada
+            return ResponseEntity.status(500).build(); // 500 Internal Server Error
         }
     }
 
@@ -50,7 +50,7 @@ public class PessoaController {
             return pessoa.map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
-            return ResponseEntity.status(500).build(); // Retorna erro 500 em caso de falha inesperada
+            return ResponseEntity.status(500).build(); // 500 Internal Server Error
         }
     }
 
@@ -74,7 +74,7 @@ public class PessoaController {
 
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
-            return ResponseEntity.status(500).build(); // Retorna erro 500 em caso de falha inesperada
+            return ResponseEntity.status(500).build(); // 500 Internal Server Error
         }
     }
 
@@ -89,7 +89,7 @@ public class PessoaController {
                         return ResponseEntity.ok(pessoaService.salvar(pessoaAtualizada));
                     }).orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
-            return ResponseEntity.status(500).build(); // Retorna erro 500 em caso de falha inesperada
+            return ResponseEntity.status(500).build(); // 500 Internal Server Error
         }
     }
 
@@ -104,7 +104,7 @@ public class PessoaController {
             }
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
-            return ResponseEntity.status(500).build(); // Retorna erro 500 em caso de falha inesperada
+            return ResponseEntity.status(500).build(); // 500 Internal Server Error
         }
     }
 }

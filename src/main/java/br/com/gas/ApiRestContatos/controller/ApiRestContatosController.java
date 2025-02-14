@@ -29,7 +29,7 @@ public class ApiRestContatosController {
             List<Pessoa> pessoas = pessoaRepository.findAll();
             return ResponseEntity.ok(pessoas);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(null); // Retorna erro 500 em caso de falha
+            return ResponseEntity.status(500).body(null); // 500 Internal Server Error
         }
     }
 
@@ -40,7 +40,7 @@ public class ApiRestContatosController {
             List<Contato> contatos = contatoRepository.findAll();
             return ResponseEntity.ok(contatos);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(null); // Retorna erro 500 em caso de falha
+            return ResponseEntity.status(500).body(null); // 500 Internal Server Error
         }
     }
 
@@ -69,7 +69,7 @@ public class ApiRestContatosController {
 
             return ResponseEntity.ok(pessoaRepository.saveAll(listaPessoas));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(null); // Retorna erro 500 em caso de falha
+            return ResponseEntity.status(500).body(null); // 500 Internal Server Error
         }
     }
 
@@ -97,9 +97,9 @@ public class ApiRestContatosController {
 
             return ResponseEntity.ok(contatoRepository.saveAll(listaContatos));
         } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(null); // Retorna erro 404 se pessoa não encontrada
+            return ResponseEntity.status(404).body(null); // 404 Not Found
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(null); // Retorna erro 500 em caso de falha geral
+            return ResponseEntity.status(500).body(null); // 500 Internal Server Error
         }
     }
 

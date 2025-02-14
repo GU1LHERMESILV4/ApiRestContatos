@@ -26,7 +26,7 @@ public class ContatoController {
             Contato savedContato = contatoService.salvar(contato);
             return ResponseEntity.ok(savedContato);
         } catch (Exception e) {
-            return ResponseEntity.status(500).build(); // Retorna erro 500 se algo der errado
+            return ResponseEntity.status(500).build(); // 500 Internal Server Error
         }
     }
 
@@ -38,7 +38,7 @@ public class ContatoController {
                     .map(ResponseEntity::ok)
                     .orElse(ResponseEntity.notFound().build());
         } catch (Exception e) {
-            return ResponseEntity.status(500).build(); // Retorna erro 500 em caso de erro no serviço
+            return ResponseEntity.status(500).build(); // 500 Internal Server Error
         }
     }
 
@@ -50,7 +50,7 @@ public class ContatoController {
             List<Contato> contatos = contatoService.listarPorPessoa(pessoaId);
             return ResponseEntity.ok(contatos);
         } catch (Exception e) {
-            return ResponseEntity.status(500).build(); // Retorna erro 500 em caso de erro no serviço
+            return ResponseEntity.status(500).build(); // 500 Internal Server Error
         }
     }
 
@@ -62,7 +62,7 @@ public class ContatoController {
                     .map(ResponseEntity::ok)
                     .orElse(ResponseEntity.notFound().build());
         } catch (Exception e) {
-            return ResponseEntity.status(500).build(); // Retorna erro 500 em caso de erro no serviço
+            return ResponseEntity.status(500).build(); // 500 Internal Server Error
         }
     }
 
@@ -74,7 +74,7 @@ public class ContatoController {
             contatoService.deletar(id);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
-            return ResponseEntity.status(500).build(); // Retorna erro 500 se falhar ao deletar
+            return ResponseEntity.status(500).build(); // 500 Internal Server Error
         }
     }
 }

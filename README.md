@@ -94,8 +94,8 @@ spring.jpa.show-sql=true
 spring.jpa.hibernate.ddl-auto=update
 spring.datasource.driver-class-name=org.h2.Driver
 spring.datasource.url=jdbc:h2:mem:pessoa
-spring.datasource.username=seu-login
-spring.datasource.password=sua-senha
+spring.datasource.username=sa
+spring.datasource.password=
 spring.jpa.defer-datasource-initialization=true
 ```
 
