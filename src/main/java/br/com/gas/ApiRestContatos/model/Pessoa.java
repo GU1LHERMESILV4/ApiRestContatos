@@ -1,14 +1,11 @@
 package br.com.gas.ApiRestContatos.model;
 
 import jakarta.persistence.*;
-import lombok.*; //Usei Lombok Edu :(
 
 import java.util.List;
 
 @Entity
 @Table(name = "tb_pessoas")
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
 public class Pessoa {
 
     @Id
@@ -26,12 +23,34 @@ public class Pessoa {
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contato> contatos;
 
-    public void setId(Long id) {
-        this.id = id;
+    // Construtor sem parâmetros
+    public Pessoa() {
     }
 
+    // Construtor com parâmetros
+    public Pessoa(List<Contato> contatos, String uf, String cidade, String cep, String endereco, String nome) {
+        this.contatos = contatos;
+        this.uf = uf;
+        this.cidade = cidade;
+        this.cep = cep;
+        this.endereco = endereco;
+        this.nome = nome;
+    }
+
+    // Método estático para criar uma Pessoa com o nome
+    public static Pessoa fromString(String nome) {
+        Pessoa pessoa = new Pessoa(); // Usa o construtor sem parâmetros
+        pessoa.setNome(nome);
+        return pessoa;
+    }
+
+    // Getters e Setters
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -42,20 +61,20 @@ public class Pessoa {
         this.nome = nome;
     }
 
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
     public String getCep() {
         return cep;
     }
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     public String getCidade() {
