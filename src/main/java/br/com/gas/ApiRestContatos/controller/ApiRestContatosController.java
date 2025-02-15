@@ -11,11 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api") // http://localhost:8080/api
+@RequestMapping("/api")
 public class ApiRestContatosController {
 
     @Autowired
@@ -24,91 +23,58 @@ public class ApiRestContatosController {
     @Autowired
     private ContatoRepository contatoRepository;
 
-    @Operation(summary = "Lista todas as pessoas", description = "Este endpoint retorna uma lista de todas as pessoas cadastradas no banco de dados.")
+    @Operation(summary = "Lista todas as pessoas")
     @GetMapping("/pessoas/listar")
     public ResponseEntity<List<Pessoa>> listarPessoas() {
         try {
             List<Pessoa> pessoas = pessoaRepository.findAll();
             return ResponseEntity.ok(pessoas);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(null); // 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @Operation(summary = "Lista todos os contatos", description = "Este endpoint retorna todos os contatos cadastrados no sistema.")
+    @Operation(summary = "Lista todos os contatos")
     @GetMapping("/contatos/listar")
     public ResponseEntity<List<Contato>> listarContatos() {
         try {
             List<Contato> contatos = contatoRepository.findAll();
             return ResponseEntity.ok(contatos);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(null); // 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @Operation(summary = "Adiciona novas pessoas", description = "Este endpoint adiciona pessoas ao banco de dados.")
+    @Operation(summary = "Adiciona novas pessoas")
     @PostMapping("/pessoas/cadastrar")
-    public ResponseEntity<List<Pessoa>> cadastrarPessoas() {
+    public ResponseEntity<Pessoa> cadastrarPessoa(@RequestBody Pessoa pessoa) {
         try {
-            List<Pessoa> listaPessoas = new ArrayList<>();
-
-            Pessoa pessoa1 = new Pessoa();
-            pessoa1.setNome("João Silva");
-            pessoa1.setEndereco("Rua A, 123");
-            pessoa1.setCep("11111-000");
-            pessoa1.setCidade("São Paulo");
-            pessoa1.setUf("SP");
-
-            Pessoa pessoa2 = new Pessoa();
-            pessoa2.setNome("Maria Souza");
-            pessoa2.setEndereco("Rua B, 456");
-            pessoa2.setCep("22222-000");
-            pessoa2.setCidade("Rio de Janeiro");
-            pessoa2.setUf("RJ");
-
-            listaPessoas.add(pessoa1);
-            listaPessoas.add(pessoa2);
-
-            return ResponseEntity.ok(pessoaRepository.saveAll(listaPessoas));
+            Pessoa pessoaSalva = pessoaRepository.save(pessoa);
+            return ResponseEntity.ok(pessoaSalva);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(null); // 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @Operation(summary = "Adiciona novos contatos", description = "Este endpoint adiciona contatos ao banco de dados.")
+    @Operation(summary = "Adiciona novos contatos")
     @PostMapping("/contatos/cadastrar")
-    public ResponseEntity<List<Contato>> cadastrarContatos() {
+    public ResponseEntity<Contato> cadastrarContato(@RequestBody Contato contato) {
         try {
-            List<Contato> listaContatos = new ArrayList<>();
-
-            Pessoa pessoa1 = pessoaRepository.findById(1L)
-                    .orElseThrow(() -> new PessoaNotFoundException("Pessoa com ID 1 não encontrada"));
-
-            Contato contato1 = new Contato();
-            contato1.setTipoContato(0);
-            contato1.setContato("1111-1111");
-            contato1.setPessoa(pessoa1);
-
-            Contato contato2 = new Contato();
-            contato2.setTipoContato(1);
-            contato2.setContato("99999-9999");
-            contato2.setPessoa(pessoa1);
-
-            listaContatos.add(contato1);
-            listaContatos.add(contato2);
-
-            return ResponseEntity.ok(contatoRepository.saveAll(listaContatos));
+            Pessoa pessoa = pessoaRepository.findById(contato.getPessoa().getId())
+                    .orElseThrow(() -> new PessoaNotFoundException("Pessoa não encontrada"));
+            contato.setPessoa(pessoa);
+            Contato contatoSalvo = contatoRepository.save(contato);
+            return ResponseEntity.ok(contatoSalvo);
         } catch (PessoaNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-
-    @Operation(summary = "Verifica o status da API", description = "Este endpoint retorna uma mensagem simples para verificar se a API está funcionando corretamente.")
+    @Operation(summary = "Verifica o status da API")
     @GetMapping
     public ResponseEntity<String> getApi() {
-        return ResponseEntity.ok("API Java funcionando! 😁");
+        return ResponseEntity.ok("API Java funcionando! ");
     }
 }

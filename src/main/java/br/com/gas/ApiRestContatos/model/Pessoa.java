@@ -1,5 +1,6 @@
 package br.com.gas.ApiRestContatos.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class Pessoa {
     private String uf;
 
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Contato> contatos;
 
     // Construtor sem parâmetros

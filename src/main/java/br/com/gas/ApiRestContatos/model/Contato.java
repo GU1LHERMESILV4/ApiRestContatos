@@ -1,5 +1,6 @@
 package br.com.gas.ApiRestContatos.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +19,7 @@ public class Contato {
 
     @ManyToOne
     @JoinColumn(name = "pessoa_id", nullable = false)
+    @JsonBackReference
     private Pessoa pessoa;
 
     public Contato() {}

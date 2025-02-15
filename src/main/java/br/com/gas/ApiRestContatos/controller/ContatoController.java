@@ -3,10 +3,12 @@ package br.com.gas.ApiRestContatos.controller;
 import br.com.gas.ApiRestContatos.model.Contato;
 import br.com.gas.ApiRestContatos.service.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/contatos")
@@ -32,11 +34,15 @@ public class ContatoController {
 
     @Operation(summary = "Retorna os dados de um Contato por ID", description = "Este endpoint retorna os detalhes de um contato específico com base no ID fornecido.")
     @GetMapping("/{id}")
-    public ResponseEntity<Contato> buscarContatoPorId(@PathVariable Long id) {
+    public ResponseEntity<?> buscarContatoPorId(@PathVariable Long id) {
         try {
-            return contatoService.buscarPorId(id)
-                    .map(ResponseEntity::ok)
-                    .orElse(ResponseEntity.notFound().build());
+            Optional<Contato> contatoOpt = contatoService.buscarPorId(id);
+            if (contatoOpt.isPresent()) {
+                return ResponseEntity.ok(contatoOpt.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Contato com ID " + id + " não encontrado.");
+            }
         } catch (Exception e) {
             return ResponseEntity.status(500).build(); // 500 Internal Server Error
         }
