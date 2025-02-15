@@ -18,6 +18,8 @@
 8. [Documentação da API](#documentação-da-api)  
 9. [Testes](#testes)  
    - [Exemplo de cURL para criar uma nova Pessoa](#exemplo-de-curl-para-criar-uma-nova-pessoa)  
+   
+## Introdução
 
 Este projeto é uma API REST desenvolvida em Java com Spring Boot, com o objetivo de gerenciar um sistema de cadastro de Pessoas e seus respectivos Contatos. A API permite operações CRUD (Criar, Ler, Atualizar e Deletar) tanto para Pessoas quanto para Contatos.
 
