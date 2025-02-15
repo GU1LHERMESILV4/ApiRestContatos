@@ -1,8 +1,9 @@
-# API Rest para Controle de Contatos
+# ☎ API Rest para Controle de Contatos
 
 ## Índice  
 
-1. [Introdução](#api-rest-para-controle-de-contatos)  
+
+1. [Introdução](#introdução)  
 2. [Tecnologias Utilizadas](#tecnologias-utilizadas)  
 3. [Funcionalidades](#funcionalidades)  
    - [CRUD de Pessoas](#1-crud-de-pessoas)  
