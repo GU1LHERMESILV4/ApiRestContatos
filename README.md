@@ -28,6 +28,7 @@ Este projeto é uma API REST desenvolvida em Java com Spring Boot, com o objetiv
 - **JPA/Hibernate**
 - **Banco de Dados**: MySQL, MariaDB, PostgreSQL ou H2
 - **Swagger (OpenAPI)** para documentação da API
+- **Postman** para testes de API
 
 ## Funcionalidades
 
@@ -87,16 +88,23 @@ A API implementa as seguintes funcionalidades:
 Configure as credenciais do banco de dados no arquivo `application.properties`:
 
 ```properties
-spring.h2.console.enabled=true
-spring.h2.console.path=/h2-console
-spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
-spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=update
-spring.datasource.driver-class-name=org.h2.Driver
 spring.datasource.url=jdbc:h2:mem:pessoa
+spring.datasource.driver-class-name=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
+spring.datasource.hikari.minimum-idle=5
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.idle-timeout=30000
+spring.datasource.hikari.connection-timeout=30000
+spring.datasource.hikari.max-lifetime=600000
+spring.datasource.hikari.auto-commit=true
+spring.datasource.hikari.transaction-isolation=TRANSACTION_READ_COMMITTED
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
 spring.jpa.defer-datasource-initialization=true
+spring.jpa.open-in-view=true
 ```
 
 ## Execução do Projeto

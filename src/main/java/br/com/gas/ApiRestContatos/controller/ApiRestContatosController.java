@@ -75,6 +75,6 @@ public class ApiRestContatosController {
     @Operation(summary = "Verifica o status da API")
     @GetMapping
     public ResponseEntity<String> getApi() {
-        return ResponseEntity.ok("API Java funcionando! ");
+        return ResponseEntity.ok("API Java funcionando! 😁");
     }
 }
