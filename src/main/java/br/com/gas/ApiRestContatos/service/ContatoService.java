@@ -2,6 +2,7 @@ package br.com.gas.ApiRestContatos.service;
 
 import br.com.gas.ApiRestContatos.model.Contato;
 import br.com.gas.ApiRestContatos.repository.ContatoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class ContatoService {
             return contatoRepository.save(existingContato);
         });
     }
+
 
     public void deletar(Long id) {
         contatoRepository.deleteById(id);

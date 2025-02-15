@@ -1,11 +1,13 @@
 package br.com.gas.ApiRestContatos.controller;
 
+import br.com.gas.ApiRestContatos.exception.PessoaNotFoundException;
 import br.com.gas.ApiRestContatos.model.Pessoa;
 import br.com.gas.ApiRestContatos.model.Contato;
 import br.com.gas.ApiRestContatos.repository.PessoaRepository;
 import br.com.gas.ApiRestContatos.repository.ContatoRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -80,7 +82,7 @@ public class ApiRestContatosController {
             List<Contato> listaContatos = new ArrayList<>();
 
             Pessoa pessoa1 = pessoaRepository.findById(1L)
-                    .orElseThrow(() -> new RuntimeException("Pessoa com ID 1 não encontrada"));
+                    .orElseThrow(() -> new PessoaNotFoundException("Pessoa com ID 1 não encontrada"));
 
             Contato contato1 = new Contato();
             contato1.setTipoContato(0);
@@ -96,12 +98,13 @@ public class ApiRestContatosController {
             listaContatos.add(contato2);
 
             return ResponseEntity.ok(contatoRepository.saveAll(listaContatos));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(null); // 404 Not Found
+        } catch (PessoaNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(null); // 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // 500 Internal Server Error
         }
     }
+
 
     @Operation(summary = "Verifica o status da API", description = "Este endpoint retorna uma mensagem simples para verificar se a API está funcionando corretamente.")
     @GetMapping
