@@ -2,7 +2,6 @@ package br.com.gas.ApiRestContatos.service;
 
 import br.com.gas.ApiRestContatos.model.Contato;
 import br.com.gas.ApiRestContatos.repository.ContatoRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,28 +16,34 @@ public class ContatoService {
         this.contatoRepository = contatoRepository;
     }
 
-    public Contato salvar(Contato contato) {
+    public List<Contato> listarContatos() {
+        return contatoRepository.findAll();
+    }
+
+    public Contato criarContato(Contato contato) {
         return contatoRepository.save(contato);
     }
 
-    public List<Contato> listarPorPessoa(Long pessoaId) {
-        return contatoRepository.findByPessoaId(pessoaId);
+    public Contato atualizarContato(Long id, Contato contato) {
+        Optional<Contato> existente = contatoRepository.findById(id);
+        if (existente.isPresent()) {
+            Contato contatoExistente = existente.get();
+            contatoExistente.setNome(contato.getNome());
+            contatoExistente.setEmail(contato.getEmail());
+            contatoExistente.setTelefone(contato.getTelefone());
+            // Se houver outros campos, adicione aqui
+            return contatoRepository.save(contatoExistente);
+        } else {
+            throw new RuntimeException("Contato não encontrado com id: " + id);
+        }
     }
 
-    public Optional<Contato> buscarPorId(Long id) {
-        return contatoRepository.findById(id);
-    }
-
-    public Optional<Contato> atualizar(Long id, Contato contato) {
-        return contatoRepository.findById(id).map(existingContato -> {
-            existingContato.setTipoContato(contato.getTipoContato());
-            existingContato.setContato(contato.getContato());
-            return contatoRepository.save(existingContato);
-        });
-    }
-
-
-    public void deletar(Long id) {
+    public void deletarContato(Long id) {
         contatoRepository.deleteById(id);
+    }
+
+    public Contato buscarContatoPorId(Long id) {
+        return contatoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Contato não encontrado com id: " + id));
     }
 }
